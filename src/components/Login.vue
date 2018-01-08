@@ -1,15 +1,15 @@
 <template>
   <div class="hello">
     <div class="login-title">
-      <img src="../assets/login-brand.png" alt=""/>
+      <img src="../assets/logo.png" alt=""/>
     </div>
     <el-card class="box-card">
       <div slot="header" class="card-header clearfix">
-        <span>城停信息后台管理系统</span>
+        <span>后台管理系统</span>
         <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
       </div>
       <div class="login-div" v-if="is_login">
-        <el-form ref="form" label-position="left" label-width="70px" :model="ruleForm" :rules="rules" ref='ruleForm'>
+        <el-form ref="form" label-position="left" label-width="70px" :model="ruleForm" :rules="rules">
             <el-form-item label="登录名" prop="name">
               <el-input v-model="ruleForm.name"></el-input>
             </el-form-item>
@@ -87,7 +87,20 @@ export default {
       }).catch(function(data){
 
       });*/
-      this.$refs.userForm.validate();
+      this.$refs.form.validate(function (result) {
+        if(result){
+            // 验证通过,调用module里的setUserInfo方法
+            //this.$store.dispatch("setUserInfo");
+            if(this.ruleForm.name == 'admin' && this.ruleForm.pwd == '123456'){
+              this.$router.push('first');
+            }else{
+               this.$message('不正确的用户名或者密码');
+            }
+        }else{
+          //this.$message('不正确的用户名或者密码');
+        }
+      }.bind(this));
+
     },
   },
   mounted () {
