@@ -1,8 +1,14 @@
 # pro1
 
 > A Vue.js project
+> vue2 vue-router vuex element-ui
 
 ## Build Setup
+
+###nodejs version 
+8.9.3
+###npm version
+5.5.1
 
 ``` bash
 # install dependencies

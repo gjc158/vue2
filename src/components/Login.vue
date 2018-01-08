@@ -6,37 +6,35 @@
     <el-card class="box-card">
       <div slot="header" class="card-header clearfix">
         <span>后台管理系统</span>
-        <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+        <el-button style="float: right; padding: 3px 0; width: 80px;" type="text" @click="changeType(1)">
+          <span v-if='is_login'>验证码登录</span><span v-else>返回</span></el-button>
       </div>
-      <div class="login-div" v-if="is_login">
+      <div class="login-div" v-show="is_login">
         <el-form ref="form" label-position="left" label-width="70px" :model="ruleForm" :rules="rules">
             <el-form-item label="登录名" prop="name">
               <el-input v-model="ruleForm.name"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="pwd">
-              <el-input v-model="ruleForm.pwd"></el-input>
+              <el-input type="password" v-model="ruleForm.pwd"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" round @click="gologin()">登录</el-button>
+              <el-button type="primary" class='login-btn' round @click="gologin()">登录</el-button>
               <!-- <el-button type="primary" @click="gologin()">登录</el-button> -->
               <!-- <el-button type="primary" @click="changeType(1)">注册</el-button> -->
             </el-form-item>
         </el-form>
       </div>
-      <div class="register-div" v-else>
-        <el-form ref="form" label-position="left" label-width="180px">
-            <el-form-item label="登录名">
-              <el-input></el-input>
+      <div class="register-div" v-show="!is_login">
+        <el-form ref="phone_form" label-position="left" label-width="80px" :model='phoneForm' :rules="rules2">
+            <el-form-item label="手机号码">
+              <el-input v-model="phoneForm.phone"></el-input>
             </el-form-item>
-            <el-form-item label="密码">
-              <el-input></el-input>
-            </el-form-item>
-            <el-form-item label="确认密码">
-              <el-input></el-input>
+            <el-form-item label="验证码">
+              <el-input v-model="phoneForm.code"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary">注册</el-button>
-              <el-button type="primary" @click="changeType(2)">取消</el-button>
+              <el-button type="primary" @click="gologin()">登录</el-button>
+              <el-button type='default' @click="changeType(2)">取消</el-button>
             </el-form-item>
         </el-form>
       </div>
@@ -45,6 +43,18 @@
 </template>
 
 <script>
+//这里要俺需要引入，我不是一个对象
+ import {isvalidPhone} from '../config/validate'
+//定义一个全局的变量，谁用谁知道
+var validPhone=(rule, value,callback)=>{
+  if (!value){
+    callback(new Error('请输入电话号码'))
+  }else  if (!isvalidPhone(value)){
+    callback(new Error('请输入正确的11位手机号码'))
+  }else {
+    callback()
+  }
+}
 export default {
   name: 'Login',
   data () {
@@ -53,7 +63,11 @@ export default {
       is_login: true,
       ruleForm: {
         name: '',
-        pwd: ''
+        pwd: '',
+      },
+      phoneForm: {
+        phone: '',
+        code: '',
       },
       rules: {
         name: [
@@ -64,15 +78,18 @@ export default {
           { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 5, max: 20, message: '密码长度应在6到20位之间', trigger: 'blur' }
         ],
+      },
+      rules2: {
+        phone: [{ required: true, trigger: 'blur', validator: validPhone }]
       }
     }
   },
   methods: {
     changeType (type) {
-      if(type == 2){
-        this.is_login = true
-      }else{
+      if(this.is_login == true){
         this.is_login = false
+      }else{
+        this.is_login = true
       }
     },
     gologin () {
@@ -92,7 +109,7 @@ export default {
             // 验证通过,调用module里的setUserInfo方法
             //this.$store.dispatch("setUserInfo");
             if(this.ruleForm.name == 'admin' && this.ruleForm.pwd == '123456'){
-              this.$router.push('first');
+              this.$router.push('main');
             }else{
                this.$message('不正确的用户名或者密码');
             }
