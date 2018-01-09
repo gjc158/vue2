@@ -5,6 +5,7 @@ import Main from '@/components/Main'
 import One from '@/components/subpage/One'
 import Two from '@/components/subpage/Two'
 import Notfound from '@/components/Notfound'
+import Welcome from '@/components/Welcome'
 
 Vue.use(Router)
 
@@ -24,6 +25,7 @@ const router = new Router({
       name: 'notfound',
       component: Notfound,
     },
+    
   	{
   	  path: '/',
   	  redirect: '/login',
@@ -37,27 +39,33 @@ const router = new Router({
 	  path: '/main',
 	  name: 'Main',
 	  component: Main,
+    meta: {
+        requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+    },
 	  children: [{
 	  	path: '/one',
 	  	name: 'One',
-	  	component: One
+	  	component: One,
+      meta: {
+        requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+      },
 	  },
 	  {
 	  	path: '/two',
 	  	name: 'Two',
-	  	component: Two
-	  }]
+	  	component: Two,
+      meta: {
+        requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+      },
+	  },
+    {
+      path: '/welcome',
+      name: 'welcome',
+      component: Welcome,
+    },]
 	}
-    
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.length ===0) {                                        //如果未匹配到路由
-    from.name ? next({ name:from.name }) : next('/');   //如果上级也未匹配到路由则跳转登录页面，如果上级能匹配到则转上级路由
-  } else {
-    next();                                                                            //如果匹配到正确跳转
-  }
-});
 
 export default router

@@ -29,4 +29,22 @@ body{
   .login-btn{
     width: 100%;
   }
+  .register-div .el-input-group__append button.el-button{
+    background: #fff;
+    border-radius: 0;
+    &:focus, &:hover{
+      color: #409EFF;
+      border-color: #c6e2ff;
+      background-color: #ecf5ff;
+    } 
+    &.is-disabled{
+      &:focus, &:hover{
+        color: #c0c4cc;
+        cursor: not-allowed;
+        background-image: none;
+        background-color: #fff;
+        border-color: #ebeef5;
+      }
+    }
+  }
 }

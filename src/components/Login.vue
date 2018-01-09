@@ -6,7 +6,7 @@
     <el-card class="box-card">
       <div slot="header" class="card-header clearfix">
         <span>后台管理系统</span>
-        <el-button style="float: right; padding: 3px 0; width: 80px;" type="text" @click="changeType(1)">
+        <el-button style="float: right; padding: 3px 0; width: 80px;" type="text" @click="changeType()">
           <span v-if='is_login'>验证码登录</span><span v-else>返回</span></el-button>
       </div>
       <div class="login-div" v-show="is_login">
@@ -26,15 +26,20 @@
       </div>
       <div class="register-div" v-show="!is_login">
         <el-form ref="phone_form" label-position="left" label-width="80px" :model='phoneForm' :rules="rules2">
-            <el-form-item label="手机号码">
+            <el-form-item label="手机号码" prop='phone'>
               <el-input v-model="phoneForm.phone"></el-input>
             </el-form-item>
-            <el-form-item label="验证码">
-              <el-input v-model="phoneForm.code"></el-input>
+            <el-form-item label="验证码" prop='code'>
+              <el-input v-model="phoneForm.code" class="input-with-button">
+                <template slot="append">
+                  <el-button v-if='!is_send' @click='sendMsg()'>发送</el-button>
+                  <el-button v-else disabled ><span :model='time_dec'>{{time_dec}}</span>s</el-button>
+                </template>
+              </el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="gologin()">登录</el-button>
-              <el-button type='default' @click="changeType(2)">取消</el-button>
+              <el-button type='default' @click="changeType()">取消</el-button>
             </el-form-item>
         </el-form>
       </div>
@@ -61,6 +66,8 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App',
       is_login: true,
+      is_send: false,
+      time_dec: 30,
       ruleForm: {
         name: '',
         pwd: '',
@@ -80,12 +87,13 @@ export default {
         ],
       },
       rules2: {
-        phone: [{ required: true, trigger: 'blur', validator: validPhone }]
+        phone: [{ required: true, trigger: 'blur', validator: validPhone }],
+        code: [{required: true, trigger: 'blur', message: '请输入验证码'}]
       }
     }
   },
   methods: {
-    changeType (type) {
+    changeType () {
       if(this.is_login == true){
         this.is_login = false
       }else{
@@ -104,20 +112,50 @@ export default {
       }).catch(function(data){
 
       });*/
-      this.$refs.form.validate(function (result) {
-        if(result){
-            // 验证通过,调用module里的setUserInfo方法
-            //this.$store.dispatch("setUserInfo");
-            if(this.ruleForm.name == 'admin' && this.ruleForm.pwd == '123456'){
-              this.$router.push('main');
-            }else{
-               this.$message('不正确的用户名或者密码');
-            }
-        }else{
-          //this.$message('不正确的用户名或者密码');
-        }
-      }.bind(this));
+      if(this.is_login){
+        this.$refs.form.validate(function (result) {
+          if(result){
+              // 验证通过,调用module里的setUserInfo方法
+              //this.$store.dispatch("setUserInfo");
+              if(this.ruleForm.name == 'admin' && this.ruleForm.pwd == '123456'){
+                this.$store.state.token = this.ruleForm.name + '-'+this.ruleForm.pwd;
+                this.$router.push('main');
+              }else{
+                 this.$message('不正确的用户名或者密码');
+              }
+          }else{
+            //this.$message('不正确的用户名或者密码');
+          }
+        }.bind(this));
+      }else{
+        this.$refs.phone_form.validate(function (result) {
+          if(result){
+              // 验证通过,调用module里的setUserInfo方法
+              //this.$store.dispatch("setUserInfo");
+              if(this.phoneForm.phone == '13348296753' && this.phoneForm.code == '123456'){
+                this.$store.state.token = this.phoneForm.phone + '-'+this.phoneForm.code;
+                this.$router.push('main');
+              }else{
+                 this.$message('不正确的手机号码或验证码');
+              }
+          }else{
+            //this.$message('不正确的用户名或者密码');
+          }
+        }.bind(this));
+      }
+      
 
+    },
+    sendMsg () {
+      this.is_send = true;
+      this.timekey = setInterval(()=>{
+        this.time_dec -= 1;
+        if(this.time_dec == 0) {
+          clearInterval(this.timekey);
+          this.time_dec = 30;
+          this.is_send = false;
+        } 
+      }, 1000);
     },
   },
   mounted () {

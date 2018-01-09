@@ -4,12 +4,13 @@
 		  <el-header>
 		  	<el-menu
 		  	  :default-active="activeIndex2"
-		  	  class="el-menu-demo"
+		  	  class="el-menu-main-top"
 		  	  mode="horizontal"
 		  	  @select="handleSelect"
 		  	  background-color="#545c64"
 		  	  text-color="#fff"
 		  	  active-text-color="#ffd04b">
+		  	  <img src="../assets/logo.png" class="brand-png">
 		  	  <el-menu-item index="1">处理中心</el-menu-item>
 		  	  <el-submenu index="2">
 		  	    <template slot="title">我的工作台</template>
@@ -91,13 +92,22 @@
 		</el-container>
 	</div>
 </template>
-<style scoped>
+<style scoped lang='less'>
 .first{
 	height: 100%;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;
+}
+.el-menu-main-top {
+	.brand-png{
+	    height: 40px;
+    	padding: 6px 15px;
+	}
+	.el-menu-item, .el-submenu{
+	  float: right;
+	}
 }
 .el-container.is-vertical{
 	height: 100%;
@@ -139,7 +149,7 @@ export default {
     }
   },
   mounted () {
-  	this.msg = this.$store.state.user;
+  	this.$router.push('/welcome');
   }
 }	
 </script>
