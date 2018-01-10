@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import store from './store/index'
 import axios from 'axios'
+import VueI18n from 'vue-i18n'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 var qs = require('qs')
@@ -15,6 +16,7 @@ Vue.prototype.$http= axios
 Vue.prototype.$qs = qs
 
 router.beforeEach((to, from, next) => {
+	console.info(store.state.token);
     if (to.meta.requireAuth) {  // 判断该路由是否需要登录权限
         if (store.state.token) {  // 通过vuex state获取当前的token是否存在
             next();
@@ -30,13 +32,22 @@ router.beforeEach((to, from, next) => {
         next();
     }
 });
+Vue.use(VueI18n)
 Vue.use(ElementUI)
+const i18n = new VueI18n({
+    locale: 'en',  // 语言标识
+    messages: {
+        'zh': require('./common/lang/zh'),
+        'en': require('./common/lang/en')
+    }
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   store,
   axios,
+  i18n,
   qs,
   template: '<App/>',
   components: { App }

@@ -1,11 +1,22 @@
 <template>
   <div class="hello">
-    <div class="login-title">
+    <el-menu mode="horizontal" 
+        @select="handleSelect" 
+        class="el-menu-login-top"
+        background-color="#3e99f4"
+        text-color="#fff"
+        active-text-color="#ffd04b">
       <img src="../assets/logo.png" alt=""/>
-    </div>
+      <el-submenu index="1">
+          <template slot="title">我的工作台</template>
+          <el-menu-item index="2-1">选项1</el-menu-item>
+          <el-menu-item index="2-2">选项2</el-menu-item>
+          <el-menu-item index="2-3">选项3</el-menu-item>
+        </el-submenu>
+    </el-menu>
     <el-card class="box-card">
       <div slot="header" class="card-header clearfix">
-        <span>后台管理系统</span>
+        <span>{{ $t('login.back_system') }}</span>
         <el-button style="float: right; padding: 3px 0; width: 80px;" type="text" @click="changeType()">
           <span v-if='is_login'>验证码登录</span><span v-else>返回</span></el-button>
       </div>

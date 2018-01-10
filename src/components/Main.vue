@@ -23,21 +23,12 @@
 		  </el-header>
 		  <el-container>
 		    <el-aside width="200px">
-		    	<el-menu :default-openeds="['1', '3']">
+		    	<el-menu :default-openeds="['1']">
 		    	  <el-submenu index="1">
 		    	    <template slot="title"><i class="el-icon-message"></i>导航一</template>
-		    	    <el-menu-item-group>
-		    	      <template slot="title">分组一</template>
-		    	      <el-menu-item index="1-1">
-						<router-link to="/one">选项1</router-link>
-		    	      </el-menu-item>
-		    	      <el-menu-item index="1-2">
-		    	      	<router-link to="/two">选项2</router-link>
-		    	      </el-menu-item>
-		    	    </el-menu-item-group>
-		    	    <el-menu-item-group title="分组2">
-		    	      <el-menu-item index="1-3">选项3</el-menu-item>
-		    	    </el-menu-item-group>
+	    	        <el-menu-item index="1-1" @click='goSubpage("/one")' >选项1</el-menu-item>
+	    	        <el-menu-item index="1-2" @click='goSubpage("/two")'>选项2</el-menu-item>
+		    	    <el-menu-item index="1-3">选项3</el-menu-item>
 		    	    <el-submenu index="1-4">
 		    	      <template slot="title">选项4</template>
 		    	      <el-menu-item index="1-4-1">选项4-1</el-menu-item>
@@ -146,7 +137,10 @@ export default {
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
-    }
+    },
+    goSubpage (_href) {
+      this.$router.push(_href);
+    },
   },
   mounted () {
   	this.$router.push('/welcome');
