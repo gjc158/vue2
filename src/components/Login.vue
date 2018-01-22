@@ -8,10 +8,9 @@
         active-text-color="#ffd04b">
       <img src="../assets/logo.png" alt=""/>
       <el-submenu index="1">
-          <template slot="title">我的工作台</template>
-          <el-menu-item index="2-1">选项1</el-menu-item>
-          <el-menu-item index="2-2">选项2</el-menu-item>
-          <el-menu-item index="2-3">选项3</el-menu-item>
+          <template slot="title">{{ $t('login.language')}}</template>
+          <el-menu-item index="2-1" @click="changeLocale('zh')">中文</el-menu-item>
+          <el-menu-item index="2-2" @click="changeLocale('en')">English</el-menu-item>
         </el-submenu>
     </el-menu>
     <el-card class="box-card">
@@ -111,6 +110,9 @@ export default {
         this.is_login = true
       }
     },
+    handleSelect () {
+
+    },
     gologin () {
       //this.$router.push('/first');
       /*var param = {}
@@ -168,6 +170,22 @@ export default {
         } 
       }, 1000);
     },
+    changeLocale (type) {
+      this.$confirm(this.$t('layer.toggle'), this.$t('layer.tips'), {
+        confirmButtonText: this.$t('button.ok'),
+        cancelButtonText: this.$t('button.cancel'),
+        type: 'warning'
+        }).then(() => {
+           let locale = this.$i18n.locale
+           console.info(locale);
+           this.$i18n.locale = type;
+
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+          })      
+        })
+    },
   },
   mounted () {
       let name = this.$store.state.user;
@@ -180,6 +198,14 @@ export default {
 @import '../css/login.less';
 </style>
 <style lang='less'>
+  .el-menu-login-top{
+    .el-submenu{
+      color: #fff;
+      .el-submenu__title i{
+        color: #fff;
+      }
+    }
+  }
   @media screen and (max-width: 425px) {
   .hello{
     .el-card.box-card{
@@ -188,5 +214,6 @@ export default {
       box-shadow: none;
     }
   }
+
 }
 </style>

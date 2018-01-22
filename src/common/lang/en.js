@@ -9,6 +9,16 @@ module.exports = {
         send: 'send',
         back: 'back',
         login: 'login',
+        cancel: 'cancel',
+        language: 'English',
+    },
+    layer: {
+        toggle: 'Sure to change language?',
+        tips: 'Warn Tips',
+
+    },
+    button: {
+        ok: 'ok',
         cancel: 'cancel'
     },
     message: {

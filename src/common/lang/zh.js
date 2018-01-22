@@ -9,6 +9,16 @@ module.exports = {
         send: '发送',
         back: '返回',
         login: '登录',
+        cancel: '取消',
+         language: '中文',
+    },
+    layer: {
+        toggle: '确定要切换语言么?',
+        tips: '提示',
+
+    },
+    button: {
+        ok: '确定',
         cancel: '取消'
     },
     message: {

@@ -12,9 +12,12 @@ body{
     }
     .el-submenu{
       float: right;
-      .el-submenu__title .el-submenu__icon-arrow{
-        color: #fff;
-      }
+      color: #fff;
+      .el-submenu__title{
+        i{
+          color: #fff;
+        }
+      } 
     }
   }
   .el-card{
@@ -49,6 +52,14 @@ body{
         background-color: #fff;
         border-color: #ebeef5;
       }
+    }
+  }
+  .el-menu--horizontal .el-submenu>.el-menu{
+    width: 60px;
+    top: 60px;
+    left: inherit;
+    >.el-menu-item{
+      min-width: 60px;
     }
   }
 }
