@@ -16,7 +16,6 @@ Vue.prototype.$http= axios
 Vue.prototype.$qs = qs
 
 router.beforeEach((to, from, next) => {
-	console.info(store.state.token);
     if (to.meta.requireAuth) {  // 判断该路由是否需要登录权限
         if (store.state.token) {  // 通过vuex state获取当前的token是否存在
             next();
@@ -34,14 +33,30 @@ router.beforeEach((to, from, next) => {
 });
 Vue.use(VueI18n)
 Vue.use(ElementUI)
-const i18n = new VueI18n({
+axios.get('../static/lang.json').then((langpack) => {
+  const i18n = new VueI18n({
+      locale: langpack.data.default,  // 语言标识
+      fallbackLocale: langpack.data.default,
+      messages: langpack.data.map
+  })
+  new Vue({
+    el: '#app',
+    router,
+    store,
+    axios,
+    i18n,
+    qs,
+    template: '<App/>',
+    components: { App }
+  })
+});
+/*const i18n = new VueI18n({
     locale: 'zh',  // 语言标识
     messages: {
         'zh': require('./common/lang/zh'),
         'en': require('./common/lang/en')
     }
 })
-/* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
@@ -51,4 +66,4 @@ new Vue({
   qs,
   template: '<App/>',
   components: { App }
-})
+})*/

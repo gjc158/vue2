@@ -1,0 +1,59 @@
+{
+	"default":"zh",
+	"map":{
+		"zh":{
+			"login":{
+			    "back_system": "后台管理系统",
+			    "code_login": "验证码登录",
+			    "login_name": "登录名",
+			    "password": "密码",
+			    "phone": "手机号码",
+			    "code": "验证码",
+			    "send": "发送",
+			    "back": "返回",
+			    "login": "登录",
+			    "cancel": "取消",
+			    "language": "中文"
+			},
+			"layer":{
+			    "toggle": "确定要切换语言么?",
+			    "tips": "提示"
+			},
+			"button":{
+			    "ok": "确定",
+			    "cancel": "取消"
+			},
+			"validate":{
+				"please_enter_name": "请输入名称",
+				"please_enter_pwd": "请输入密码"
+			}
+		},
+		"en":{
+			"login":{
+			    "back_system": "background system",
+			    "code_login": "code login",
+			    "login_name": "name",
+			    "password": "password",
+			    "phone": "phone",
+			    "code": "code",
+			    "send": "send",
+			    "back": "back",
+			    "login": "login",
+			    "cancel": "cancel",
+			    "language": "English"
+			},
+			"layer":{
+			    "toggle": "Sure to change language?",
+			    "tips": "Warn Tips"
+			},
+			"button":{
+			    "ok": "ok",
+			    "cancel": "cancel"
+			},
+			"validate":{
+				"please_enter_name": "please enter name",
+				"please_enter_pwd": "please enter pwd"
+			}
+		}
+	}
+}

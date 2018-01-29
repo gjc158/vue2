@@ -17,7 +17,7 @@
       <div slot="header" class="card-header clearfix">
         <span>{{ $t('login.back_system') }}</span>
         <el-button style="float: right; padding: 3px 0; width: 80px;" type="text" @click="changeType()">
-          <span v-if='is_login'>验证码登录</span><span v-else>返回</span></el-button>
+          <span v-if='is_login'>{{ $t('login.code_login') }}</span><span v-else>{{ $t('login.back') }}</span></el-button>
       </div>
       <div class="login-div" v-show="is_login">
         <el-form ref="form" label-position="left" label-width="70px" :model="ruleForm" :rules="rules">
@@ -25,10 +25,16 @@
               <el-input v-model="ruleForm.name"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="pwd">
-              <el-input type="password" v-model="ruleForm.pwd"></el-input>
-            </el-form-item>
+             <el-input type="password" v-model="ruleForm.pwd"></el-input>
+           </el-form-item>
+            <!-- <el-form-item :label="$t('login.login_name')" prop="name">
+              <el-input v-model="ruleForm.name"></el-input>
+            </el-form-item> -->
+           <!--  <el-form-item :label="$t('login.password')" prop="pwd">
+             <el-input type="password" v-model="ruleForm.pwd"></el-input>
+           </el-form-item> -->
             <el-form-item>
-              <el-button type="primary" class='login-btn' round @click="gologin()">登录</el-button>
+              <el-button type="primary" class='login-btn' round @click="gologin()">{{ $t('login.login') }}</el-button>
               <!-- <el-button type="primary" @click="gologin()">登录</el-button> -->
               <!-- <el-button type="primary" @click="changeType(1)">注册</el-button> -->
             </el-form-item>
@@ -36,20 +42,23 @@
       </div>
       <div class="register-div" v-show="!is_login">
         <el-form ref="phone_form" label-position="left" label-width="80px" :model='phoneForm' :rules="rules2">
-            <el-form-item label="手机号码" prop='phone'>
+            <el-form-item label="手机号" prop='phone'>
               <el-input v-model="phoneForm.phone"></el-input>
             </el-form-item>
+            <!-- <el-form-item :label="$t('login.phone')" prop='phone'>
+              <el-input v-model="phoneForm.phone"></el-input>
+            </el-form-item> -->
             <el-form-item label="验证码" prop='code'>
               <el-input v-model="phoneForm.code" class="input-with-button">
                 <template slot="append">
-                  <el-button v-if='!is_send' @click='sendMsg()'>发送</el-button>
-                  <el-button v-else disabled ><span :model='time_dec'>{{time_dec}}</span>s</el-button>
+                  <el-button v-if='!is_send' @click='sendMsg()'>{{ $t('login.send') }}</el-button>
+                  <el-button v-else disabled ><span :model='time_dec'>{{ time_dec }}</span>s</el-button>
                 </template>
               </el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="gologin()">登录</el-button>
-              <el-button type='default' @click="changeType()">取消</el-button>
+              <el-button type="primary" @click="gologin()">{{ $t('login.login') }}</el-button>
+              <el-button type='default' @click="changeType()">{{ $t('login.cancel') }}</el-button>
             </el-form-item>
         </el-form>
       </div>
@@ -156,8 +165,6 @@ export default {
           }
         }.bind(this));
       }
-      
-
     },
     sendMsg () {
       this.is_send = true;
