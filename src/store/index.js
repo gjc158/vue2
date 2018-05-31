@@ -31,6 +31,10 @@ const state = {
     ],
     user: '',
     islogin: false,
+    count: 0,
+    obj: {
+        message: 'hello'
+    }
 }
 
 // 设置暴露接口

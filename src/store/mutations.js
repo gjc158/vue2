@@ -13,4 +13,10 @@ export default {
     	state.user = 'user';
     	state.islogin = false;
     },
+    ADDCOUNT(state, value){
+        state.count = state.count + 1;
+    },
+    updateMessage(state, value){
+        state.obj.message = value;
+    }
 }

@@ -11,6 +11,9 @@
 		  	  text-color="#fff"
 		  	  active-text-color="#ffd04b">
 		  	  <img src="../assets/logo.png" class="brand-png">
+		  	  <span class='count-span'>
+		  	  	总数：{{ $store.state.count }}; message:<span v-model='message' @click='changeMsg'> {{message}}</span>
+		  	  </span>
 		  	  <el-menu-item index="1">处理中心</el-menu-item>
 		  	  <el-submenu index="2">
 		  	    <template slot="title">我的工作台</template>
@@ -100,6 +103,9 @@
 	  float: right;
 	}
 }
+.count-span{
+	color: #fff;
+}
 .el-container.is-vertical{
 	height: 100%;
 }
@@ -125,7 +131,17 @@ export default {
       isCollapse: false,
       activeIndex: '1',
       activeIndex2: '1',
-      tableData: []
+      tableData: [],
+    }
+  },
+  computed: {
+    message: {
+      get () {
+        return this.$store.state.obj.message
+      },
+      set (value) {
+        this.$store.commit('updateMessage', value)
+      }
     }
   },
   methods: {
@@ -141,6 +157,9 @@ export default {
     goSubpage (_href) {
       this.$router.push(_href);
     },
+    changeMsg () {
+      this.message == 'hello' ? this.message = 'olleh' : this.message = 'hello'
+    }
   },
   mounted () {
   	this.$router.push('/welcome');

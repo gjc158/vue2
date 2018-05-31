@@ -7,5 +7,11 @@ export default {
     login({commit}, user){
     	console.info(user);
     	commit('LOGIN', user);
-    }
+    },
+    addCount({commit}, value){
+    	commit('ADDCOUNT', value);
+    },
+    updateMessage({commit}, value){
+    	commit('updateMessage', value);
+    },
 }
